@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Block" load_steps=2 format=3 uid="uid://j60agx4gu4uc"]
+
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/block_data.gd" id="1_nxvhy"]
+
+[resource]
+script = ExtResource("1_nxvhy")
+name = "Stone"
+tile_coords = Vector2i(6, 1)
+value = 50
+drop_chance = 0.25
+metadata/_custom_type_script = "uid://cwk5klh6ahq7d"

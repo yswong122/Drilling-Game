@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://cnpidmcfts2n0"]
+
+[ext_resource type="Script" uid="uid://cyireuy86e6ey" path="res://scenes/world.gd" id="1_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://ddtty887r4ysk" path="res://scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="TileSet" uid="uid://c30u27gxqimsv" path="res://resources/game_tile_set.tres" id="2_4wyf3"]
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/block_data.gd" id="2_i7141"]
+[ext_resource type="Resource" uid="uid://b3mf6ugu8ipkp" path="res://resources/dirt_block.tres" id="2_qfnet"]
+[ext_resource type="Resource" uid="uid://cnqwk2e0gnwf0" path="res://resources/ore_block.tres" id="3_i7141"]
+[ext_resource type="Resource" uid="uid://j60agx4gu4uc" path="res://resources/stone_block.tres" id="4_4mrxx"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_4wyf3")
+starting_col = 1
+starting_row = 2
+block_types = Array[ExtResource("2_i7141")]([ExtResource("2_qfnet"), ExtResource("3_i7141"), ExtResource("4_4mrxx")])
+
+[node name="GameGrid" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = ExtResource("2_4wyf3")
+
+[node name="Player" parent="." instance=ExtResource("1_nnsk1")]
+unique_name_in_owner = true
+position = Vector2(80, 48)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(24, 73)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_left_margin = 1.0
+drag_right_margin = 1.0
+
+[connection signal="drilled_block_at_position" from="Player" to="." method="_on_player_drilled_block_at_position"]
