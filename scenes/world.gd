@@ -1,19 +1,34 @@
 extends Node2D
 
+
 @export var columns: int = 3
 @export var visible_rows: int = 8
 @export var starting_col: int
 @export var starting_row: int
 @export var block_types: Array[Block]
+@export var max_fuel: float
+@export var fuel_rate: float
+@export var idle_fuel_rate: float
 
 const TILE_SIZE: int = 32
 var latest_row: int
+var current_fuel: float
+var current_score: int = 0
 
 
 func _ready():
 	_generate_initial_map()
 	latest_row = visible_rows
+	current_fuel = max_fuel
 
+
+func _physics_process(delta: float) -> void:
+	current_fuel -= idle_fuel_rate * delta
+	
+	%FuelLabel.text = "Fuel: " + str(int(current_fuel))
+	
+	if current_fuel <= 0:
+		_run_out_of_fuel()
 
 func _generate_initial_map() -> void:
 	%GameGrid.clear()
@@ -39,8 +54,7 @@ func _add_new_row() -> void:
 func _on_player_drilled_block_at_position(position_to_drill: Vector2) -> void:
 	# Get coords in tileset for the position drilled
 	var block_coords = %GameGrid.local_to_map(position_to_drill)
-
-	# Get value of the drilled block
+	# Get data of the drilled block
 	var drilled_block_data = _get_block_data_by_coords(block_coords)
 
 	# Erase block
@@ -49,12 +63,21 @@ func _on_player_drilled_block_at_position(position_to_drill: Vector2) -> void:
 		#for col in range(starting_col, starting_col + columns):
 			#%GameGrid.erase_cell(Vector2i(col, block_coords.y))
 
+	# Reduce fuel
+	current_fuel -= fuel_rate
+
+	# Increase score
+	current_score += drilled_block_data.value
+
+	if current_fuel <= 0:
+		_run_out_of_fuel()
+
 	# Create new row to make it infinite
 	_add_new_row()
 
 
 func _get_random_block_coord() -> Vector2i:
-	var random_number = randf() # Returns a random float between 0.0 and 1.0
+	var random_number = randf()
 	
 	var cumulative_chance = 0.0
 	for block in block_types:
@@ -62,7 +85,7 @@ func _get_random_block_coord() -> Vector2i:
 		if random_number <= cumulative_chance:
 			return block.tile_coords
 			
-	return block_types.front().tile_coords # Fallback
+	return block_types.front().tile_coords
 
 
 func _get_block_data_by_coords(coords: Vector2i) -> Block:
@@ -73,3 +96,8 @@ func _get_block_data_by_coords(coords: Vector2i) -> Block:
 			if block.name == block_type:
 				return block
 	return block_types.front()
+
+
+func _run_out_of_fuel() -> void:
+	print("Game Over! Final Score: ", current_score)
+	get_tree().paused = true
