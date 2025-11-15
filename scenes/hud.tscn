@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://chjy10h3m7v38"]
+
+[ext_resource type="FontFile" uid="uid://baj8dmb5eyg8m" path="res://assets/PixelOperator8.ttf" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://cwkdhamg7bl3f" path="res://scripts/hud.gd" id="1_oo0fn"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 4
+script = ExtResource("1_oo0fn")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 125.0
+offset_bottom = 8.0
+
+[node name="FuelLabel" type="Label" parent="TopBar"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 8
+text = "Fuel: 100"
+
+[node name="ScoreLabel" type="Label" parent="TopBar"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 8
+text = "Score: 100"

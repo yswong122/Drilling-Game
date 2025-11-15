@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cnpidmcfts2n0"]
+[gd_scene load_steps=10 format=3 uid="uid://cnpidmcfts2n0"]
 
 [ext_resource type="Script" uid="uid://cyireuy86e6ey" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://ddtty887r4ysk" path="res://scenes/player.tscn" id="1_nnsk1"]
@@ -7,15 +7,22 @@
 [ext_resource type="Resource" uid="uid://b3mf6ugu8ipkp" path="res://resources/dirt_block.tres" id="2_qfnet"]
 [ext_resource type="Resource" uid="uid://cnqwk2e0gnwf0" path="res://resources/ore_block.tres" id="3_i7141"]
 [ext_resource type="Resource" uid="uid://j60agx4gu4uc" path="res://resources/stone_block.tres" id="4_4mrxx"]
+[ext_resource type="AudioStream" uid="uid://yj8j4nsirvvg" path="res://assets/impactBell_heavy_004.ogg" id="6_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://chjy10h3m7v38" path="res://scenes/hud.tscn" id="8_4mrxx"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_4wyf3")
-starting_col = 1
-starting_row = 2
+visible_rows = 7
 block_types = Array[ExtResource("2_i7141")]([ExtResource("2_qfnet"), ExtResource("3_i7141"), ExtResource("4_4mrxx")])
 max_fuel = 100.0
-fuel_rate = 2.0
-idle_fuel_rate = 2.0
+fuel_rate = 1.0
+idle_fuel_rate = 1.5
+
+[node name="DrillSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7r4gi")
+volume_db = -20.0
+pitch_scale = 0.5
+max_polyphony = 2
 
 [node name="GameGrid" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
@@ -23,22 +30,16 @@ tile_set = ExtResource("2_4wyf3")
 
 [node name="Player" parent="." instance=ExtResource("1_nnsk1")]
 unique_name_in_owner = true
-position = Vector2(80, 48)
+position = Vector2(80, 80)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, 72)
-position_smoothing_enabled = true
+position = Vector2(0, 40)
 drag_horizontal_enabled = true
 drag_left_margin = 1.0
 drag_right_margin = 1.0
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="FuelLabel" type="Label" parent="UILayer"]
-unique_name_in_owner = true
-offset_right = 35.0
-offset_bottom = 12.0
-theme_override_font_sizes/font_size = 8
-text = "Fuel: 100"
+[node name="HUD" parent="UILayer" instance=ExtResource("8_4mrxx")]
 
 [connection signal="drilled_block_at_position" from="Player" to="." method="_on_player_drilled_block_at_position"]

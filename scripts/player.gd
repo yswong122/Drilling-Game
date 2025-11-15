@@ -11,13 +11,13 @@ func _ready() -> void:
 	position.x = middle_x_position
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_pressed():
+	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		match event.keycode:
 			KEY_LEFT, KEY_A:
 				new_x_position = middle_x_position - TILE_SIZE
 			KEY_RIGHT, KEY_D:
 				new_x_position = middle_x_position + TILE_SIZE
-			KEY_DOWN, KEY_W:
+			KEY_DOWN, KEY_S:
 				new_x_position = middle_x_position
 			_:
 				return

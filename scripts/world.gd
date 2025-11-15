@@ -3,8 +3,7 @@ extends Node2D
 
 @export var columns: int = 3
 @export var visible_rows: int = 8
-@export var starting_col: int
-@export var starting_row: int
+
 @export var block_types: Array[Block]
 @export var max_fuel: float
 @export var fuel_rate: float
@@ -12,22 +11,29 @@ extends Node2D
 
 const TILE_SIZE: int = 32
 var latest_row: int
-var current_fuel: float
-var current_score: int = 0
+var game_started = false
+var starting_col: int = 1
+var starting_row: int = 3
 
+@onready var hud: Control = $UILayer/HUD
+const DRILL_PARTICLES = preload("uid://dts7kpjjdblk2")
+@onready var drill_sfx: AudioStreamPlayer = $DrillSFX
 
 func _ready():
 	_generate_initial_map()
 	latest_row = visible_rows
-	current_fuel = max_fuel
+	GameData.current_fuel = max_fuel
+	game_started = false
 
 
 func _physics_process(delta: float) -> void:
-	current_fuel -= idle_fuel_rate * delta
-	
-	%FuelLabel.text = "Fuel: " + str(int(current_fuel))
-	
-	if current_fuel <= 0:
+	if game_started == true:
+		GameData.current_fuel -= idle_fuel_rate * delta
+
+	hud.update_fuel_label()
+	hud.update_score_label()
+
+	if GameData.current_fuel <= 0:
 		_run_out_of_fuel()
 
 func _generate_initial_map() -> void:
@@ -59,17 +65,25 @@ func _on_player_drilled_block_at_position(position_to_drill: Vector2) -> void:
 
 	# Erase block
 	if %GameGrid.get_cell_source_id(block_coords) != -1:
+		if !game_started:
+			game_started = true
 		%GameGrid.erase_cell(block_coords)
-		#for col in range(starting_col, starting_col + columns):
-			#%GameGrid.erase_cell(Vector2i(col, block_coords.y))
+		
+		drill_sfx.play()
 
-	# Reduce fuel
-	current_fuel -= fuel_rate
+		# TODO: Fade out blocks intead
+		for col in range(starting_col, starting_col + columns):
+			%GameGrid.erase_cell(Vector2i(col, block_coords.y - 4))
 
 	# Increase score
-	current_score += drilled_block_data.value
+	GameData.current_score += drilled_block_data.value
+	
+	_spawn_drill_particles(block_coords)
 
-	if current_fuel <= 0:
+	# Reduce fuel
+	GameData.current_fuel -= fuel_rate
+
+	if GameData.current_fuel <= 0:
 		_run_out_of_fuel()
 
 	# Create new row to make it infinite
@@ -99,5 +113,11 @@ func _get_block_data_by_coords(coords: Vector2i) -> Block:
 
 
 func _run_out_of_fuel() -> void:
-	print("Game Over! Final Score: ", current_score)
-	get_tree().paused = true
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+
+func _spawn_drill_particles(grid_coords: Vector2i):
+	var particles = DRILL_PARTICLES.instantiate()
+	particles.global_position = %GameGrid.map_to_local(grid_coords)
+	add_child(particles)
+	particles.emitting = true
+	particles.finished.connect(particles.queue_free)
