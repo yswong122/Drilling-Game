@@ -3,15 +3,16 @@
 [ext_resource type="Script" uid="uid://cyireuy86e6ey" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://ddtty887r4ysk" path="res://scenes/player.tscn" id="1_nnsk1"]
 [ext_resource type="TileSet" uid="uid://c30u27gxqimsv" path="res://resources/game_tile_set.tres" id="2_4wyf3"]
-[ext_resource type="AudioStream" uid="uid://cix78jycmyg1e" path="res://assets/impactMining_004.ogg" id="2_qfnet"]
 [ext_resource type="Script" uid="uid://bmnqw5uaxm284" path="res://scenes/game_grid.gd" id="4_qfnet"]
+[ext_resource type="AudioStream" uid="uid://yj8j4nsirvvg" path="res://assets/impactBell_heavy_004.ogg" id="6_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://chjy10h3m7v38" path="res://scenes/hud.tscn" id="8_4mrxx"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_4wyf3")
 
 [node name="DrillSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_qfnet")
+stream = ExtResource("6_7r4gi")
+volume_db = -20.0
 pitch_scale = 0.5
 max_polyphony = 2
 
