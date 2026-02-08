@@ -9,7 +9,7 @@ func _update_fuel_label() -> void:
 
 
 func _update_score_label() -> void:
-	score_label.text = "Score: " + str(int(GameData.current_score))
+	score_label.text = "Score: " + str(GameData.current_score)
 
 
 func update_labels() -> void:

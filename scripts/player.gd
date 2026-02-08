@@ -5,6 +5,7 @@ signal drill_block_at_position(position_to_drill: Vector2)
 var x_positions: Array[float]
 
 func _ready() -> void:
+## Get global position of middle grid and set player x position
 	x_positions = %GameGrid.get_player_x_positions()
 	position.x = x_positions[1]
 
@@ -20,15 +21,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _attempt_move(direction: String) -> void:
+	# TODO: ryhthm
 	var attempt_drill_position: Vector2
 
 	# Identify drill position 
 	if direction == "left":
 		attempt_drill_position.x = x_positions[0]
-	if direction == "right":
-		attempt_drill_position.x = x_positions[2]
 	if direction == "down":
 		attempt_drill_position.x = x_positions[1]
+	if direction == "right":
+		attempt_drill_position.x = x_positions[2]
 
 	attempt_drill_position.y = position.y + %GameGrid.TILE_SIZE
 

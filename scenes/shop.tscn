@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdlkvf0vnyuvo"]
+
+[ext_resource type="Script" uid="uid://bxgn55rabrkku" path="res://scripts/shop.gd" id="1_lx5au"]
+
+[node name="Shop" type="Node2D"]
+script = ExtResource("1_lx5au")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 180.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "Upgrade Shop"
+
+[node name="CurrencyLabel" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "Currency: "
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="FuelUpgradeButton" type="Button" parent="Control/VBoxContainer/UpgradeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Max Fuel: + 25 (Cost: 100)"
+
+[node name="RestartButton" type="Button" parent="Control/VBoxContainer/UpgradeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Start New Run"

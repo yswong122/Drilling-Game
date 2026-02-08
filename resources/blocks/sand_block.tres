@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Block" load_steps=2 format=3 uid="uid://b47ti7e77bl68"]
+
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/blocks/block_data.gd" id="1_kkaks"]
+
+[resource]
+script = ExtResource("1_kkaks")
+name = "Sand"
+tile_coords = Vector2i(2, 1)
+value = 15
+drop_chance = 0.1
+metadata/_custom_type_script = "uid://cwk5klh6ahq7d"

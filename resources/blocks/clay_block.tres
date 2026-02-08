@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Block" load_steps=2 format=3 uid="uid://d13tythuxbgpw"]
+
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/blocks/block_data.gd" id="1_b6q2b"]
+
+[resource]
+script = ExtResource("1_b6q2b")
+name = "Clay"
+tile_coords = Vector2i(4, 1)
+value = 15
+metadata/_custom_type_script = "uid://cwk5klh6ahq7d"

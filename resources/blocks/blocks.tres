@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BlockRegistry" load_steps=8 format=3 uid="uid://4c3eavh4wjx1"]
+
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/blocks/block_data.gd" id="1_b5i5q"]
+[ext_resource type="Script" uid="uid://ngcdvqe6g3so" path="res://resources/blocks/block_registry.gd" id="2_eij13"]
+[ext_resource type="Resource" uid="uid://cnqwk2e0gnwf0" path="res://resources/blocks/ore_block.tres" id="2_etqwc"]
+[ext_resource type="Resource" uid="uid://b3mf6ugu8ipkp" path="res://resources/blocks/dirt_block.tres" id="3_u4n8i"]
+[ext_resource type="Resource" uid="uid://j60agx4gu4uc" path="res://resources/blocks/stone_block.tres" id="4_aofvb"]
+[ext_resource type="Resource" uid="uid://b47ti7e77bl68" path="res://resources/blocks/sand_block.tres" id="5_aofvb"]
+[ext_resource type="Resource" uid="uid://d13tythuxbgpw" path="res://resources/blocks/clay_block.tres" id="6_agn3a"]
+
+[resource]
+script = ExtResource("2_eij13")
+blocks = Array[ExtResource("1_b5i5q")]([ExtResource("3_u4n8i"), ExtResource("4_aofvb"), ExtResource("2_etqwc"), ExtResource("5_aofvb"), ExtResource("6_agn3a")])
+metadata/_custom_type_script = "uid://ngcdvqe6g3so"

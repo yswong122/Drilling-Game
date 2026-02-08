@@ -1,25 +1,80 @@
 extends Node
 
-var _original_score: int = 0
-var _original_fuel: float = 100.0
+var _starting_score: int = 0
+var _starting_fuel: float = 10.0
 
 var current_score: int
 var current_fuel: float
 
-var _game_started = false
+## Start of the game
+var game_started = false
+## Start of the level
+var level_started = false
 
 var _drilling_fuel_rate: float = 1.0
 var _idle_fuel_rate: float = 1.5
 
+var _starting_level_up_score_threshold: int = 1
+var _level_up_score_threshold: int
+var current_level: int = 0
+
+
+func init() -> void:
+##	initialise the entire game from start
+	game_start()
+
+	current_score = _starting_score
+	current_fuel = _starting_fuel
+	_level_up_score_threshold = _starting_level_up_score_threshold
+
+
+## Game and Level functions
+
+
+func game_start() -> void:
+	if game_started == false:
+		game_started = true
+
+
+func level_start() -> void:
+	if level_started == false:
+		level_started = true
+
+
+func game_over() -> void:
+	level_over()
+	game_started = false
+
+
+func level_over() -> void:
+	level_started = false
+
 
 func reset() -> void:
-	current_score = _original_score
-	current_fuel = _original_fuel
-	_game_started = false
+	game_over()
+
+
+func set_fuel() -> void:
+##	reset the fuel
+	current_fuel = UpgradeManager.get_value("Fuel")
+
+
+func is_run_out_of_fuel() -> bool:
+	return current_fuel <= 0
+
+
+## Score and score thresholds
 
 
 func increase_score(amount: int) -> void:
 	current_score += amount
+
+
+func is_over_threshold() -> bool:
+	return current_score >= _level_up_score_threshold * pow(1.8, current_level)
+
+
+## Fuel reduce functions
 
 
 func reduce_drilling_fuel() -> void:
@@ -35,18 +90,8 @@ func reduce_fuel_by_rate(rate: float) -> void:
 	if current_fuel < 0:
 		current_fuel = 0
 
-func is_game_started() -> bool:
-	return _game_started
 
+## Upgrade functions
 
-func game_start() -> void:
-	if !_game_started:
-		_game_started = true
-
-
-func game_over() -> void:
-	_game_started = false
-
-
-func is_run_out_of_fuel() -> bool:
-	return current_fuel == 0
+func enough_money(cost: int) -> bool:
+	return current_score >= cost

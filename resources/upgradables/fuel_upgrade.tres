@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://bumq27616l475"]
+
+[ext_resource type="Script" uid="uid://b8amov7bi86tp" path="res://resources/upgradables/upgrade_data.gd" id="1_ipuvx"]
+
+[resource]
+script = ExtResource("1_ipuvx")
+name = "Fuel"
+metadata/_custom_type_script = "uid://b8amov7bi86tp"

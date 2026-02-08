@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Block" load_steps=2 format=3 uid="uid://b3mf6ugu8ipkp"]
 
-[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/block_data.gd" id="1_xavws"]
+[ext_resource type="Script" uid="uid://cwk5klh6ahq7d" path="res://resources/blocks/block_data.gd" id="1_xavws"]
 
 [resource]
 script = ExtResource("1_xavws")
 name = "Dirt"
 tile_coords = Vector2i(0, 1)
 value = 10
-drop_chance = 0.7
+drop_chance = 0.6
 metadata/_custom_type_script = "uid://cwk5klh6ahq7d"
